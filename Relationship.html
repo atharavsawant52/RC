@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Calculator</title>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .restart {
+            margin-top: 10px;
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .restart:hover {
+            background: #a71d2a;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .input-group input {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .result {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .input-group input {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .result {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Relationship Calculator</h1>
+        <div class="input-group">
+            <label for="boyName">Boy's Name:</label>
+            <input type="text" id="boyName" placeholder="Enter boy's name">
+        </div>
+        <div class="input-group">
+            <label for="boyDOB">Boy's Date of Birth:</label>
+            <input type="date" id="boyDOB">
+        </div>
+        <div class="input-group">
+            <label for="boyRashi">Boy's Rashi (Zodiac):</label>
+            <select id="boyRashi">
+                <option value="">Select Rashi</option>
+                <option value="Aries">Aries (मेष)</option>
+                <option value="Taurus">Taurus (वृषभ)</option>
+                <option value="Gemini">Gemini (मिथुन)</option>
+                <option value="Cancer">Cancer (कर्क)</option>
+                <option value="Leo">Leo (सिंह)</option>
+                <option value="Virgo">Virgo (कन्या)</option>
+                <option value="Libra">Libra (तुला)</option>
+                <option value="Scorpio">Scorpio (वृश्चिक)</option>
+                <option value="Sagittarius">Sagittarius (धनु)</option>
+                <option value="Capricorn">Capricorn (मकर)</option>
+                <option value="Aquarius">Aquarius (कुंभ)</option>
+                <option value="Pisces">Pisces (मीन)</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="girlName">Girl's Name:</label>
+            <input type="text" id="girlName" placeholder="Enter girl's name">
+        </div>
+        <div class="input-group">
+            <label for="girlDOB">Girl's Date of Birth:</label>
+            <input type="date" id="girlDOB">
+        </div>
+        <div class="input-group">
+            <label for="girlRashi">Girl's Rashi (Zodiac):</label>
+            <select id="girlRashi">
+                <option value="">Select Rashi</option>
+                <option value="Aries">Aries (मेष)</option>
+                <option value="Taurus">Taurus (वृषभ)</option>
+                <option value="Gemini">Gemini (मिथुन)</option>
+                <option value="Cancer">Cancer (कर्क)</option>
+                <option value="Leo">Leo (सिंह)</option>
+                <option value="Virgo">Virgo (कन्या)</option>
+                <option value="Libra">Libra (तुला)</option>
+                <option value="Scorpio">Scorpio (वृश्चिक)</option>
+                <option value="Sagittarius">Sagittarius (धनु)</option>
+                <option value="Capricorn">Capricorn (मकर)</option>
+                <option value="Aquarius">Aquarius (कुंभ)</option>
+                <option value="Pisces">Pisces (मीन)</option>
+            </select>
+        </div>
+        <button onclick="calculateRelationship()">Calculate</button>
+        <div class="result" id="result"></div>
+        <button class="restart" onclick="restart()">Restart</button>
+    </div>
+
+    <script>
+        const compatibility = {
+            Aries: ['Leo', 'Sagittarius', 'Aries'],
+            Taurus: ['Virgo', 'Capricorn', 'Taurus'],
+            Gemini: ['Libra', 'Aquarius', 'Gemini'],
+            Cancer: ['Scorpio', 'Pisces', 'Cancer'],
+            Leo: ['Aries', 'Sagittarius', 'Leo'],
+            Virgo: ['Taurus', 'Capricorn', 'Virgo'],
+            Libra: ['Gemini', 'Aquarius', 'Libra'],
+            Scorpio: ['Cancer', 'Pisces', 'Scorpio'],
+            Sagittarius: ['Aries', 'Leo', 'Sagittarius'],
+            Capricorn: ['Taurus', 'Virgo', 'Capricorn'],
+            Aquarius: ['Gemini', 'Libra', 'Aquarius'],
+            Pisces: ['Cancer', 'Scorpio', 'Pisces'],
+        };
+
+        // Calculate Life Path Number from DOB (sum of digits, reduce to single digit)
+        function calculateLifePathNumber(dob) {
+            const dobDigits = dob.split('-').join('');
+            let sum = 0;
+            for (let i = 0; i < dobDigits.length; i++) {
+                sum += parseInt(dobDigits[i]);
+            }
+            while (sum > 9) {
+                sum = sum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+            }
+            return sum;
+        }
+
+        // Numerology calculation based on name
+        function calculateNameNumerology(name) {
+            const alphabet = "abcdefghijklmnopqrstuvwxyz".split('');
+            const nameLower = name.toLowerCase().replace(/[^a-z]/g, ''); // Remove non-alphabet characters
+            let sum = 0;
+            for (let char of nameLower) {
+                const index = alphabet.indexOf(char);
+                sum += index + 1; // 'A' = 1, 'B' = 2, ..., 'Z' = 26
+            }
+            while (sum > 9) {
+                sum = sum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+            }
+            return sum;
+        }
+
+        function calculateCompatibility(boyRashi, girlRashi) {
+            // Basic compatibility calculation
+            const commonRashis = compatibility[boyRashi];
+            if (commonRashis && commonRashis.includes(girlRashi)) {
+                return 80;  // 80% compatibility for favorable combinations
+            } else {
+                return 50;  // 50% compatibility for neutral combinations
+            }
+        }
+
+        async function calculateRelationship() {
+            const boyName = document.getElementById('boyName').value.trim();
+            const boyDOB = document.getElementById('boyDOB').value;
+            const boyRashi = document.getElementById('boyRashi').value.trim();
+            const girlName = document.getElementById('girlName').value.trim();
+            const girlDOB = document.getElementById('girlDOB').value;
+            const girlRashi = document.getElementById('girlRashi').value.trim();
+
+            if (!boyName || !girlName || !boyDOB || !girlDOB || !boyRashi || !girlRashi) {
+                alert('Please fill in all the details.');
+                return;
+            }
+
+            // Calculate Life Path Numbers
+            const boyLifePathNumber = calculateLifePathNumber(boyDOB);
+            const girlLifePathNumber = calculateLifePathNumber(girlDOB);
+
+            // Calculate Name Numerology
+            const boyNameNumerology = calculateNameNumerology(boyName);
+            const girlNameNumerology = calculateNameNumerology(girlName);
+
+            // Calculate astrology compatibility
+            const lovePercentage = calculateCompatibility(boyRashi, girlRashi);
+            const numerologyCompatibility = (boyNameNumerology === girlNameNumerology) ? 20 : 0;
+            const lifePathCompatibility = (boyLifePathNumber === girlLifePathNumber) ? 10 : 0;
+
+            const totalCompatibility = lovePercentage + numerologyCompatibility + lifePathCompatibility;
+            const breakupPercentage = 100 - totalCompatibility;
+            const loyaltyPercentage = totalCompatibility; // Assuming loyalty equals the compatibility
+
+            document.getElementById('result').innerHTML = `
+                <div><strong>In Marathi:</strong><br>
+                प्रेम: ${totalCompatibility}%<br>वियोग: ${breakupPercentage}%<br>निष्ठा: ${loyaltyPercentage}%</div>
+                <div style="margin-top: 10px;"><strong>In English:</strong><br>
+                Love: ${totalCompatibility}%<br>Breakup: ${breakupPercentage}%<br>Loyalty: ${loyaltyPercentage}%</div>
+            `;
+        }
+
+        function restart() {
+            document.getElementById('boyName').value = '';
+            document.getElementById('boyDOB').value = '';
+            document.getElementById('boyRashi').value = '';
+            document.getElementById('girlName').value = '';
+            document.getElementById('girlDOB').value = '';
+            document.getElementById('girlRashi').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

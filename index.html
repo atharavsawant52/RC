@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .card button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Life Manager</h1>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>Relationship Calculator</h2>
+            <p>Find out relationship compatibility, love, breakup, and loyalty percentages.</p>
+            <button onclick="openRelationship()">Go to Relationship</button>
+        </div>
+        <div class="card">
+            <h2>Luck Calculator</h2>
+            <p>Discover your luck percentage and receive personalized advice for the day.</p>
+            <button onclick="openLuck()">Go to Luck</button>
+        </div>
+    </div>
+
+    <script>
+        function openRelationship() {
+            window.location.href = 'relationship.html';
+        }
+
+        function openLuck() {
+            window.location.href = 'luck.html';
+        }
+    </script>
+</body>
+</html>

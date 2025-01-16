@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luck Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .restart {
+            margin-top: 10px;
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .restart:hover {
+            background: #a71d2a;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .input-group input {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .result {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .input-group input {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .result {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Luck Calculator</h1>
+        <div class="input-group">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" placeholder="Enter your name">
+        </div>
+        <div class="input-group">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob">
+        </div>
+        <button onclick="calculateLuck()">Calculate</button>
+        <div class="result" id="result"></div>
+        <button class="restart" onclick="restart()">Restart</button>
+    </div>
+
+    <script>
+        async function getAdvice() {
+            try {
+                const response = await fetch('https://api.adviceslip.com/advice');
+                const data = await response.json();
+                return data.slip.advice;
+            } catch (error) {
+                console.error('Error fetching advice:', error);
+                return "Stay positive and keep trying!";
+            }
+        }
+
+        async function calculateLuck() {
+            const name = document.getElementById('name').value.trim();
+            const dob = document.getElementById('dob').value;
+
+            if (!name || !dob) {
+                alert('Please fill in all the details.');
+                return;
+            }
+
+            let luckPercentage;
+            if (name.toLowerCase() === 'harshal') {
+                luckPercentage = Math.floor(Math.random() * 41) + 60; // Ensures 60-100%
+            } else {
+                luckPercentage = Math.floor(Math.random() * 101);
+            }
+
+            const advice = await getAdvice();
+
+            const resultText = `
+                <div>Your Luck Percentage: <strong>${luckPercentage}%</strong></div>
+                <div>Personal Advice: <em>${advice}</em></div>
+            `;
+
+            document.getElementById('result').innerHTML = resultText;
+        }
+
+        function restart() {
+            document.getElementById('name').value = '';
+            document.getElementById('dob').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
